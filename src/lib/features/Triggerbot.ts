@@ -1,12 +1,10 @@
 import * as app from '..';
 import { Vector } from '../utilities/Vector';
+import { RAD2DEG } from '../utilities/Math';
 
 export class Triggerbot {
-  
-
   constructor(
-    private readonly context: CanvasRenderingContext2D,
-    private readonly inFov = 10,
+    private readonly inFov = 2,
     private readonly maximumDistance = 200) {
     }
 
@@ -23,19 +21,18 @@ export class Triggerbot {
 
       if (d.magnitude() > this.maximumDistance) continue;
 
-      if (this.angleFov(localPlayer, x.bodyPos) < this.inFov) continue;
+      if (this.angleFov(localPlayer, x.bodyPos) > this.inFov) continue;
       
       audio.play();
-      this.context.fillRect(100, 100, 100, 100);
     }
   }
 
-  private angleFov(localPlayer: app.Player, dst: Vector) {
-    var d = localPlayer.cameraPos.value.subtract(dst);
+  private angleFov(localPlayer: app.Player, dst: Vector): number {
+    var d = dst.subtract(localPlayer.cameraPos.value);
     d.normalize();
 
-    const angle = localPlayer.viewAngles.value.angleBetween(d);
-    const angleDegrees = angle * (180 / Math.PI);
-    return Math.max(angleDegrees, 0);
+    const f = localPlayer.viewAngles.value.forward();
+    const angle = RAD2DEG(f.angleBetween(d));
+    return Math.max(angle, 0);
   }
 }

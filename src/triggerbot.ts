@@ -2,9 +2,8 @@ import * as app from './lib';
 import {ui} from './ui';
 const container = <HTMLElement> document.querySelector('.container');
 const content = <HTMLElement> document.querySelector('.content');
-const canvas = <HTMLCanvasElement> document.querySelector('.canvas');
 const frameTime = 1000 / 40;
-const triggerbot = new app.Triggerbot(canvas.getContext('2d')!);
+const triggerbot = new app.Triggerbot();
 
 
 ui((x) => {

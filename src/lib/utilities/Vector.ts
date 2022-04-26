@@ -1,4 +1,5 @@
 import * as app from '..';
+import { DEG2RAD } from './Math';
 
 export class Vector {
   constructor(public x: number, public y: number, public z: number) {
@@ -20,7 +21,7 @@ export class Vector {
   }
 
   dotProduct(v: Vector) {
-    return this.x * v.x + this.y * v.y + this.z * v.z;
+    return (this.x * v.x) + (this.y * v.y) + (this.z * v.z);
   }
 
   normalize() {
@@ -32,8 +33,19 @@ export class Vector {
     }
   }
 
+  forward() {
+    const cp = Math.cos(DEG2RAD(this.x));
+    const sp = Math.sin(DEG2RAD(this.x));
+    
+    const cy = Math.cos(DEG2RAD(this.y));
+    const sy = Math.sin(DEG2RAD(this.y));
+
+    return new Vector(cp*cy, cp*sy, -sp);
+  }
+
   angleBetween(v: Vector) {
-    return Math.acos(this.dotProduct(v))
+    const dp = this.dotProduct(v);
+    return Math.acos(dp);
   }
 
   static from(buffer: DataView) {
