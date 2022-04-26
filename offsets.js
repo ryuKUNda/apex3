@@ -24,7 +24,8 @@ const path = require('path');
   writeAsync('playerOffsets', {
     lifeState: find(cPlayer, 'm_lifeState'),
     viewAngles: find(cPlayer, 'm_ammoPoolCapacity') - BigInt(0x14),
-    bleedoutState: find(cPlayer, 'm_bleedoutState')
+    bleedoutState: find(cPlayer, 'm_bleedoutState'),
+    cameraPos: BigInt(0x1f40)
   });
 })();
 

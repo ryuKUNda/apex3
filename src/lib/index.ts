@@ -10,6 +10,7 @@ export * from './core/Player';
 export * from './features/Map';
 export * from './features/Radar';
 export * from './features/Sense';
+export * from './features/Triggerbot';
 export * from './pointers/UInt8Pointer';
 export * from './pointers/UInt64Pointer';
 export * from './utilities/CString';

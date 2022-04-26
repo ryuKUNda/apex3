@@ -1,10 +1,40 @@
 import * as app from '..';
 
 export class Vector {
-  constructor(
-    readonly x: number,
-    readonly y: number,
-    readonly z: number) {}
+  constructor(public x: number, public y: number, public z: number) {
+      this.x = x;
+      this.y = y;
+      this.z = z;
+    }
+
+  subtract(v: Vector) {
+    return new Vector(this.x - v.x, this.y - v.y, this.z - v.z);
+  }
+
+  multiply(f: number) {
+    return new Vector(this.x * f, this.y * f, this.z * f);
+  }
+
+  magnitude() {
+    return Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z);
+  }
+
+  dotProduct(v: Vector) {
+    return this.x * v.x + this.y * v.y + this.z * v.z;
+  }
+
+  normalize() {
+    const l = this.magnitude();
+    if (l != 0) {
+      this.x /= l;
+      this.y /= l;
+      this.z /= l;
+    }
+  }
+
+  angleBetween(v: Vector) {
+    return Math.acos(this.dotProduct(v))
+  }
 
   static from(buffer: DataView) {
     const x = buffer.getFloat32(0, true);
