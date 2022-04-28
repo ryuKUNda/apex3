@@ -8,7 +8,7 @@ export class Triggerbot {
     private readonly maximumDistance = 200) {
     }
 
-  async updateAsync(localPlayer: app.Player, players: Array<app.Player>, mode?: string) {
+  async updateAsync(localPlayer: app.Player, players: Array<app.Player>, inputService: app.InputService, mode?: string) {
     var audio = new Audio('https://www.myinstants.com/media/sounds/movie_1.mp3');
     for (const x of players) {
       if (x.isLocal) continue;
@@ -24,6 +24,7 @@ export class Triggerbot {
       if (this.angleFov(localPlayer, x.bodyPos) > this.inFov) continue;
       
       audio.play();
+      await inputService.PressKey(37);
     }
   }
 

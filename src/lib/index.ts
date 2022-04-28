@@ -1,5 +1,6 @@
 export * from './helpers';
 export * from './driver/Batch';
+export * from './driver/Input';
 export * from './driver/Pointer';
 export * from './driver/Process';
 export * from './driver/Region';
