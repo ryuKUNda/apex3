@@ -5,13 +5,13 @@ export class InputService {
   // The client shouldn't be in charge of releasing the keyboard
   async End() {
     if (!this.started) return false;
-    const response = await fetch(`/api/input${this.device}`, { method: 'DELETE'});
+    const response = await fetch(`/api/input/${this.device}`, { method: 'DELETE'});
     return this.started = !(response.status == 200);
   }
 
   // TryStart
   async Start() {
-    const response = await fetch(`/api/input${this.device}`);
+    const response = await fetch(`/api/input/${this.device}`);
     return this.started = response.status == 200;
   }
 
@@ -21,7 +21,7 @@ export class InputService {
   async PressKey(code: number) {
     if (!this.started) return false;
     const body = code.toString();
-    const response = await fetch("/api/input/dev/input/event3", { body, method: 'PUT'});
+    const response = await fetch(`/api/input/${this.device}`, { body, method: 'PUT'});
     return this.started = response.status == 200;
   }
 }

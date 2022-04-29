@@ -3,29 +3,26 @@ import {ui} from './ui';
 const container = <HTMLElement> document.querySelector('.container');
 const content = <HTMLElement> document.querySelector('.content');
 const status = <HTMLElement> document.querySelector('.status');
-const frameTime = 1000 / 40;
+const frameTime = 1000 / 80;
 const triggerbot = new app.Triggerbot();
-const inputService = new app.InputService("/dev/input/event3");
+const inputService = new app.InputService("event3");
 
 
 ui((x) => {
-  return renderAsync(x);
-});
-
-function loadStyle() {
   container.style.display = 'inherit';
   status.style.display = 'inherit';
 
   content.textContent = 'Triggerbot running. Keep this window open.';
-  status.textContent = "Waiting on keyboard...";
-}
+  return renderAsync(x);
+});
+
 
 async function renderAsync(core: app.Core) {
   while (true) {
     const beginTime = Date.now();
-    const players = await core.playersAsync();
+    const [players, viewMatrix] = await Promise.all([core.playersAsync(), core.viewMatrixAsync()]);
     const localPlayer = players.find(x => x.isLocal);
-    if (localPlayer) await triggerbot.updateAsync(localPlayer, players, inputService);
+    if (localPlayer) await triggerbot.updateAsync(localPlayer, players, inputService, viewMatrix);
     await new Promise(x => setTimeout(x, frameTime - (Date.now() - beginTime)));
   }
 }
@@ -37,9 +34,7 @@ async function beforeUnload() {
 }
 
 window.onload = async () => {
-  loadStyle();
-  
-
+  status.textContent = "Waiting on keyboard...";
   if (!await inputService.Start()) {
     status.textContent = "Could not find keyboard!";
     return;

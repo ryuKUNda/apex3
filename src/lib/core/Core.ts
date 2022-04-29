@@ -23,6 +23,16 @@ export class Core {
     return levelNamePointer.value;
   }
 
+  async viewMatrixAsync() {
+    const viewRendererPointer = new app.UInt64Pointer(this.region.start + coreOffsets.viewRenderer);
+    await this.process.batch(viewRendererPointer).readAsync();
+    const viewMatrixPointerPointer = new app.UInt64Pointer(viewRendererPointer.value + coreOffsets.viewMatrix);
+    await this.process.batch(viewMatrixPointerPointer).readAsync();
+    const viewMatrixPointer = new app.MatrixPointer(viewMatrixPointerPointer.value);
+    await this.process.batch(viewMatrixPointer).readAsync();
+    return viewMatrixPointer.value;
+  }
+
   async playersAsync() {
     const localPlayerPointer = new app.UInt64Pointer(this.region.start + coreOffsets.localPlayer);
     const playerPointers = maxPlayers.map(x => new app.UInt64Pointer(this.region.start + coreOffsets.clEntityList + BigInt(x << 5)));

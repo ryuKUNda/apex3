@@ -1,5 +1,6 @@
 import * as app from '..';
 import { DEG2RAD } from './Math';
+import { Matrix } from './Matrix';
 
 export class Vector {
   constructor(public x: number, public y: number, public z: number) {
@@ -46,6 +47,27 @@ export class Vector {
   angleBetween(v: Vector) {
     const dp = this.dotProduct(v);
     return Math.acos(dp);
+  }
+
+  toScreen(m: Matrix) {
+    var out = new Vector(0, 0, 0);
+    var x = m.matrix[0] * this.x + m.matrix[1] * this.y + m.matrix[2] * this.z + m.matrix[3];
+    var y = m.matrix[4] * this.x + m.matrix[5] * this.y + m.matrix[6] * this.z + m.matrix[7];
+    out.z = m.matrix[12] * this.x + m.matrix[13] * this.y + m.matrix[14] * this.z + m.matrix[15];
+
+    x *= 1 / out.z;
+    y *= 1 / out.z;
+
+    const w = 1920; //Change this to your resolution.
+    const h = 1080;
+
+    out.x = w * .5;
+    out.y = h * .5;
+
+    out.x += 0.5 * x * w + .5;
+    out.y -= 0.5 * y * h + .5;
+
+    return out;
   }
 
   static from(buffer: DataView) {

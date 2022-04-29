@@ -14,7 +14,11 @@ export * from './features/Sense';
 export * from './features/Triggerbot';
 export * from './pointers/UInt8Pointer';
 export * from './pointers/UInt64Pointer';
+export * from './pointers/FloatPointer';
 export * from './utilities/CString';
 export * from './utilities/CStringPointer';
 export * from './utilities/Vector';
 export * from './utilities/VectorPointer';
+export * from './utilities/Matrix';
+export * from './utilities/MatrixPointer';
+
