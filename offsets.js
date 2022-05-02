@@ -20,15 +20,15 @@ const path = require('path');
     iTeamNum: find(cBaseEntity, 'm_iTeamNum'),
     iName: find(cBaseEntity, 'm_iName'),
     glowEnable: find(offsets, 'glow_enable'),
-    glowThroughWall: find(offsets, 'glow_enable') + BigInt(0x8)
+    glowThroughWall: find(offsets, 'glow_enable') + BigInt(0x8),
+    lastVisibleTime: BigInt(0x1b14)
   });
 
   writeAsync('playerOffsets', {
     lifeState: find(cPlayer, 'm_lifeState'),
     viewAngles: find(cPlayer, 'm_ammoPoolCapacity') - BigInt(0x14),
     bleedoutState: find(cPlayer, 'm_bleedoutState'),
-    cameraPos: BigInt(0x1f40),
-    lastVisibleTime: BigInt(0x1b14)
+    cameraPos: BigInt(0x1f40)
   });
 })();
 

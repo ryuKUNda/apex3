@@ -3,7 +3,6 @@ import {ui} from './ui';
 const container = <HTMLElement> document.querySelector('.container');
 const content = <HTMLElement> document.querySelector('.content');
 const status = <HTMLElement> document.querySelector('.status');
-const frameTime = 1000 / 80;
 const triggerbot = new app.Triggerbot();
 const inputService = new app.InputService("event3");
 
@@ -23,7 +22,7 @@ async function renderAsync(core: app.Core) {
     const [players, viewMatrix] = await Promise.all([core.playersAsync(), core.viewMatrixAsync()]);
     const localPlayer = players.find(x => x.isLocal);
     if (localPlayer) await triggerbot.updateAsync(localPlayer, players, inputService, viewMatrix);
-    await new Promise(x => setTimeout(x, frameTime - (Date.now() - beginTime)));
+    await new Promise(x => setTimeout(x, (Date.now() - beginTime)));
   }
 }
 

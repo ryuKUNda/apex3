@@ -2,21 +2,13 @@ import * as app from '..';
 import {playerOffsets} from './offsets/playerOffsets';
 
 export class Player extends app.Entity {
-  private oldLastVisibleTime = 0;
   constructor(address: bigint,
     readonly isLocal: boolean,
     readonly lifeState = new app.UInt8Pointer(address + playerOffsets.lifeState),
     readonly viewAngles = new app.VectorPointer(address + playerOffsets.viewAngles),
     readonly bleedoutState = new app.UInt8Pointer(address + playerOffsets.bleedoutState),
-    readonly cameraPos = new app.VectorPointer(address + playerOffsets.cameraPos),
-    readonly lastVisibleTime = new app.FloatPointer(address + playerOffsets.lastVisibleTime)) {
+    readonly cameraPos = new app.VectorPointer(address + playerOffsets.cameraPos)) {
     super(address);
-  }
-
-  get isVisible() {
-    const visible = this.lastVisibleTime.value > 0 && this.lastVisibleTime.value > this.oldLastVisibleTime;
-    this.oldLastVisibleTime = this.lastVisibleTime.value;
-    return visible;
   }
   
   get isValid() {

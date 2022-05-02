@@ -2,7 +2,6 @@ import * as app from '..';
 
 export class Triggerbot {
   constructor(
-    private readonly inFov = 2,
     private readonly maximumDistance = 200) {
     }
 
@@ -31,7 +30,7 @@ export class Triggerbot {
 
   targetScreenBox(target: app.Player, viewMatrix: app.Matrix) {
     var footPos = target.localOrigin.value;
-    var headPos = new app.Vector(target.localOrigin.value.x, target.localOrigin.value.y, target.localOrigin.value.z + 60);
+    var headPos = new app.Vector(target.localOrigin.value.x, target.localOrigin.value.y, target.localOrigin.value.z + 50);
 
     const foot = footPos.toScreen(viewMatrix);
     const head = headPos.toScreen(viewMatrix);
